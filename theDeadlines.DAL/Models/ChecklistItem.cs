@@ -5,15 +5,16 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using theDeadlines.Abstraction.IModels;
 
 namespace theDeadlines.DAL.Models;
 
 [Table("ChecklistItem")]
-public partial class ChecklistItem
+public partial class ChecklistItem : IChecklistItem
 {
     [Key]
     [Column("id")]
-    public int Id { get; set; }
+    public Guid Id { get; set; }
 
     [Column("name")]
     [StringLength(100)]
@@ -24,9 +25,15 @@ public partial class ChecklistItem
     public bool IsCompleted { get; set; }
 
     [Column("checklist_id")]
-    public int ChecklistId { get; set; }
+    public Guid ChecklistId { get; set; }
 
     [ForeignKey("ChecklistId")]
     [InverseProperty("ChecklistItems")]
     public virtual Checklist Checklist { get; set; }
+
+    IChecklist IChecklistItem.Checklist
+    {
+        get => Checklist;
+        set => Checklist = (Checklist)value;
+    }
 }

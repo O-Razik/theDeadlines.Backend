@@ -5,15 +5,16 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using theDeadlines.Abstraction.IModels;
 
 namespace theDeadlines.DAL.Models;
 
 [Table("Deadline")]
-public partial class Deadline
+public partial class Deadline : IDeadline
 {
     [Key]
     [Column("id")]
-    public int Id { get; set; }
+    public Guid Id { get; set; }
 
     [Column("name")]
     [StringLength(100)]
@@ -22,4 +23,10 @@ public partial class Deadline
 
     [InverseProperty("Deadline")]
     public virtual ICollection<SubDeadline> SubDeadlines { get; set; } = new List<SubDeadline>();
+
+    ICollection<ISubDeadline> IDeadline.SubDeadlines
+    {
+        get => SubDeadlines.Cast<ISubDeadline>().ToList();
+        set => SubDeadlines = value.Cast<SubDeadline>().ToList();
+    }
 }

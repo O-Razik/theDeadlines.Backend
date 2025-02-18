@@ -1,5 +1,5 @@
 ﻿{
-   "CodeGenerationMode": 5,
+   "CodeGenerationMode": 4,
    "ContextClassName": "theDeadlinesContext",
    "ContextNamespace": null,
    "FilterSchemas": false,
@@ -37,7 +37,7 @@
    "UseBoolPropertiesWithoutDefaultSql": false,
    "UseDatabaseNames": false,
    "UseDatabaseNamesForRoutines": true,
-   "UseDateOnlyTimeOnly": false,
+   "UseDateOnlyTimeOnly": true,
    "UseDbContextSplitting": false,
    "UseDecimalDataAnnotationForSprocResult": true,
    "UseFluentApiOnly": false,

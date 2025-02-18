@@ -5,15 +5,16 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using theDeadlines.Abstraction.IModels;
 
 namespace theDeadlines.DAL.Models;
 
 [Table("Checklist")]
-public partial class Checklist
+public partial class Checklist : IChecklist
 {
     [Key]
     [Column("id")]
-    public int Id { get; set; }
+    public Guid Id { get; set; }
 
     [Column("name")]
     [StringLength(50)]
@@ -21,12 +22,25 @@ public partial class Checklist
     public string Name { get; set; }
 
     [Column("sub_deadline_id")]
-    public int SubDeadlineId { get; set; }
+    public Guid SubDeadlineId { get; set; }
 
     [InverseProperty("Checklist")]
     public virtual ICollection<ChecklistItem> ChecklistItems { get; set; } = new List<ChecklistItem>();
 
+    ICollection<IChecklistItem> IChecklist.ChecklistItems
+    {
+        get => ChecklistItems.Cast<IChecklistItem>().ToList();
+        set => ChecklistItems = value.Cast<ChecklistItem>().ToList();
+    }
+
     [ForeignKey("SubDeadlineId")]
     [InverseProperty("Checklists")]
     public virtual SubDeadline SubDeadline { get; set; }
+    ISubDeadline IChecklist.SubDeadline
+    {
+        get => SubDeadline;
+        set => SubDeadline = (SubDeadline)value;
+    }
+
+
 }
