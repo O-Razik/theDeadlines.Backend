@@ -9,7 +9,7 @@ namespace theDeadlines.API
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            builder.AddAll();
+            builder.AddAllStnd();
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();

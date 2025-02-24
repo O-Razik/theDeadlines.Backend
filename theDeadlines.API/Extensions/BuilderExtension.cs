@@ -3,6 +3,7 @@ using theDeadlines.Abstraction.IModels;
 using theDeadlines.Abstraction.IRepositories;
 using theDeadlines.Abstraction.IServices;
 using theDeadlines.BLL.Services;
+using theDeadlines.DAL.Data;
 using theDeadlines.DAL.Models;
 using theDeadlines.DAL.Repositories;
 
@@ -10,7 +11,7 @@ namespace theDeadlines.API.Extensions;
 
 public static class BuilderExtension
 {
-    public static void AddAll(this WebApplicationBuilder builder)
+    public static void AddAllStnd(this WebApplicationBuilder builder)
     {
         builder.AddDbContext();
         builder.AddModels();
@@ -32,6 +33,7 @@ public static class BuilderExtension
         builder.Services.AddScoped<ISubDeadlineService, SubDeadlineService>();
         builder.Services.AddScoped<IChecklistService, ChecklistService>();
         builder.Services.AddScoped<IChecklistItemService, ChecklistItemService>();
+        builder.Services.AddScoped<UnitOfWork>();
     }
 
     public static void AddRepositories(this WebApplicationBuilder builder)
